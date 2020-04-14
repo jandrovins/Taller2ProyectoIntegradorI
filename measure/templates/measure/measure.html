@@ -1,0 +1,15 @@
+{% extends 'measure/base.html' %}
+{% block content %}
+<div class="container">
+    <form method="get">
+        Value:<input type="number" name="value">
+        Scale:<input type="text" name="scale">
+        <button type="submit">Adicionar</button>
+    </form>
+    {% for measure in measures %}
+    <ul class="list-group">
+        <li class="list-group-item">{{ measure.type }} in {{ measure.scale }} = {{ measure.value }}</li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock %}
