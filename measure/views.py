@@ -6,22 +6,19 @@ from django.shortcuts import get_object_or_404, render
 import requests
 
 def measure(request):
+    error = False
      # Verifica si hay un parámetro value en la petición POST
     if request.method == "POST":  # when user sends registration info:
         args = {
-            'type' : 'mayo12',
             'codigo' : request.POST['codigo'],
-            'value' : request.POST['value'],
-            'scale' : request.POST['scale'],
             'latitud' : request.POST['latitud'],
             'longitud' : request.POST['longitud'],
-            'area' : request.POST['area'],
             'terreno' : request.POST['terreno'],
+            'area' : request.POST['area'],
         }
-        # Crea el json para realizar la petición POST al Web Service
-        print(args)
+        if int(args['area']) <= 0:
+            error = True
         response = requests.post('http://127.0.0.1:8000/measure/', args)
-        # Convierte la respuesta en JSON
         measure_json = response.json()
 
     # Realiza una petición GET al Web Services
@@ -29,4 +26,4 @@ def measure(request):
     # Convierte la respuesta en JSON
     measures = response.json()
     # Rederiza la respuesta en el template measure
-    return render(request, "measure/measure.html", {'measures': measures})
+    return render(request, "measure/measure.html", {'measures': measures, 'error': error})

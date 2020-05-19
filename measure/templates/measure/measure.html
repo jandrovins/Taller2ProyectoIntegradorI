@@ -1,11 +1,14 @@
 {% extends 'measure/base.html' %}
 {% block content %}
 <div class="container">
+    {% if error %}
+    <div class="alert alert-danger">
+      <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+    </div>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         Código:<input type="text" name="codigo">
-        Value:<input type="number" name="value">
-        Scale:<input type="text" name="scale">
         Latitud:<input type="number" name="latitud">
         Longitud:<input type="number" name="longitud">
         Área:<input type="number" step="0.01" name="area">
@@ -22,7 +25,7 @@
     </form>
     {% for measure in measures %}
     <ul class="list-group">
-        <li class="list-group-item">Código: {{measure.codigo}}, Valor: {{measure.value}}, Scale:{{measure.scale}}, Latitud: {{measure.latitud}}, Longitud: {{measure.longitud}}, Área: {{measure.area}}, Terreno: {{measure.terreno}}</li>
+        <li class="list-group-item">Código: {{measure.codigo}}, Latitud: {{measure.latitud}}, Longitud: {{measure.longitud}}, Área: {{measure.area}}, Terreno: {{measure.terreno}}</li>
     </ul>
     {% endfor %}
 </div>
